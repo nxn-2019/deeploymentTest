@@ -5,7 +5,7 @@ jobs:
       - image: circleci/node:14.6.0
     steps:
       - attach_workspace:
-              at: /usr/share/nginx/html/deploymentTest
+              at: .
       - add_ssh_keys:
           fingerprints:
             - "26:3b:c3:01:a7:7d:5c:a5:d1:db:f8:a7:e7:6b:6e:c4"
@@ -19,7 +19,7 @@ jobs:
       - run: npm run build
       - run:
           name: build frontend
-          command: docker build -t district-deployment-test:latest -f district-deployment-test /usr/share/nginx/html/deploymentTest
+          command: docker build -t district-deployment-test .
       - run:
           name: push frontend
           command: |
