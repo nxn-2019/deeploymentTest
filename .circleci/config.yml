@@ -17,7 +17,9 @@ jobs:
       - run: npm run build
       - run:
           name: build frontend
-          command: sudo docker build -t district-deployment-test .
+          command: |
+          docker login -u nxn2021 -p NXNLogin@2019
+          docker build -t district-deployment-test .
       - run:
           name: push frontend
           command: |
