@@ -13,7 +13,7 @@ jobs:
           name: Test
           command: npm test
       - store_artifacts:
-          path: test-results.xml
+          path: /usr/share/nginx/html/deploymentTest/test-results.xml
           prefix: tests
       - run: npm build
 
