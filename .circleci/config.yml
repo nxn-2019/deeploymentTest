@@ -19,7 +19,7 @@ jobs:
       - run: npm run build
       - run:
           name: build frontend
-          command: docker build -t district-deployment-test:latest -f district-deployment-test /usr/share/nginx/html/deploymentTest
+          command: docker build -t district-deployment-test:latest -f district-deployment-test /usr/share/nginx/html/deploymentTest/
       - run:
           name: push frontend
           command: |
