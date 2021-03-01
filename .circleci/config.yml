@@ -17,6 +17,7 @@ jobs:
       - store_artifacts:
           path: test-results.xml
       - run: npm run build
+
   build-docker-image:
     machine:
         image: ubuntu-1604:202004-01
@@ -38,3 +39,9 @@ jobs:
               tag: $__BUILD_VERSION
               registry: $DOCKER_REGISTRY
 
+workflows:
+  version: 2
+  - build-docker-image:
+    context: docker-hub
+    requires:
+        - build
