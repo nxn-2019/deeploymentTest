@@ -1,0 +1,27 @@
+version: 2.1
+jobs:
+  build:
+    docker:
+      - image: circleci/node:14.6.0
+    steps:
+      - add_ssh_keys:
+          fingerprints:
+            - "26:3b:c3:01:a7:7d:5c:a5:d1:db:f8:a7:e7:6b:6e:c4"
+      - checkout
+      - run: npm install
+      - run:
+          name: Test
+          command: npm test
+      - store_artifacts:
+          path: test-results.xml
+      - run: npm run build
+      - run:
+          name: build frontend
+          command: |
+            docker login -u nxn2021 -p NXNLogin@2019
+            docker build -t district-deployment-test .
+      - run:
+          name: push frontend
+          command: |
+            docker login -u nxn2021 -p NXNLogin@2019
+            docker push district-deployment-test:latest
