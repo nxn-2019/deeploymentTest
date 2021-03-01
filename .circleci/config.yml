@@ -4,7 +4,7 @@ jobs:
     docker:
       - image: circleci/node:14.6.0
     steps:
-        - attach_workspace:
+      - attach_workspace:
               at: /usr/share/nginx/html/deploymentLogs/deploymentTest
       - add_ssh_keys:
           fingerprints:
@@ -16,7 +16,6 @@ jobs:
           command: npm test
       - store_artifacts:
           path: test-results.xml
-          prefix: tests
       - run: npm build
   build-docker-image:
     machine:
