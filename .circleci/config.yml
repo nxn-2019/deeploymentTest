@@ -18,8 +18,8 @@ jobs:
       - run:
           name: build frontend
           command: |
-          docker login -u nxn2021 -p NXNLogin@2019
-          docker build -t district-deployment-test .
+            docker login -u nxn2021 -p NXNLogin@2019
+            docker build -t district-deployment-test .
       - run:
           name: push frontend
           command: |
