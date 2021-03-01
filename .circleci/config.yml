@@ -20,28 +20,12 @@ jobs:
           path: test-results.xml
       - run: npm run build
 
-  build-docker-image:
-    machine:
-        image: ubuntu-1604:202004-01
-    steps:
-        - attach_workspace:
-              at: .
-        - run:
-              name: Setup __BUILD_VERSION envvar
-              command: |
-                  echo "export __BUILD_VERSION=\"$(cat version.txt)\"" >> $BASH_ENV
-        - docker/build:
-              image: district-deployment-test
-              tag: latest
-        - docker/push:
-              image: district-deployment-test
-              tag: latest
+    - run:
+       name: build frontend
+       command: docker build -t district-deployment-test:tag -f district-deployment-test .
 
-workflows:
-    version: 2
-    xxx:
-        jobs:
-            - build
-            - build-docker-image:
-                  requires:
-                      - build
+    - run:
+       name: push frontend
+       command: |
+         docker login -u nxn2021 -p NXNLogin@2019
+         docker push district-deployment-test:tag

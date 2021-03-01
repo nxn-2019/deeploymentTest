@@ -1,0 +1,51 @@
+version: 2.1
+orbs:
+    docker: circleci/docker@1.0.1
+jobs:
+  build:
+    docker:
+      - image: circleci/node:14.6.0
+    steps:
+      - attach_workspace:
+              at: .
+      - add_ssh_keys:
+          fingerprints:
+            - "26:3b:c3:01:a7:7d:5c:a5:d1:db:f8:a7:e7:6b:6e:c4"
+      - checkout
+      - run: npm install
+      - run:
+          name: Test
+          command: npm test
+      - store_artifacts:
+          path: test-results.xml
+      - run: npm run build
+
+  build-docker-image:
+    machine:
+        image: ubuntu-1604:202004-01
+    steps:
+        - attach_workspace:
+              at: .
+        - run:
+              name: Setup __BUILD_VERSION envvar
+              command: |
+                  echo "export __BUILD_VERSION=\"$(cat version.txt)\"" >> $BASH_ENV
+        - docker/check:
+              registry: $DOCKER_REGISTRY
+        - docker/build:
+              image: $DOCKER_IMAGE_NAME
+              tag: $__BUILD_VERSION
+              registry: $DOCKER_REGISTRY
+        - docker/push:
+              image: $DOCKER_IMAGE_NAME
+              tag: $__BUILD_VERSION
+              registry: $DOCKER_REGISTRY
+
+workflows:
+    version: 2
+    xxx:
+        jobs:
+            - build
+            - build-docker-image:
+                  requires:
+                      - build
