@@ -9,6 +9,17 @@ jobs:
             - "26:3b:c3:01:a7:7d:5c:a5:d1:db:f8:a7:e7:6b:6e:c4"
       - checkout
       - run: npm install
-      - run: npm test
+      - run:
+          name: Test
+          command: npm test
+      - run:
+          name: Generate code coverage
+          command: './node_modules/.bin/nyc report --reporter=text-lcov'
+      - store_artifacts:
+          path: test-results.xml
+          prefix: tests
+      - store_artifacts:
+          path: coverage
+          prefix: coverage
       - run: npm build
 
