@@ -16,7 +16,7 @@ jobs:
           command: npm test
       - store_artifacts:
           path: test-results.xml
-      - run: npm build
+      - run: npm start
   build-docker-image:
     machine:
         image: ubuntu-1604:202004-01
