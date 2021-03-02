@@ -21,7 +21,9 @@ jobs:
       - name: Use Node.js 14.6.0
         uses: actions/setup-node@v1
         with: 
-          node-version: 14.x
+          node-version: 14.6.0
+      - name: Config dependencies
+        run: npm config set unsafe-perm true
       - name: Install dependencies
         run: npm install
       - name: Test
@@ -52,4 +54,3 @@ jobs:
         uses: joelwmale/webhook-action@master
         env:
           WEBHOOK_URL: ${{ secrets.DEPLOY_WEBHOOK_URL  }}
-          data: "{ 'myField': 'myFieldValue'}"
