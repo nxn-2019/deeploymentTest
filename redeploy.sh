@@ -12,7 +12,8 @@ docker login --username=nxn2021 --password=NXNLogin@2019
 
 docker pull nxn2021/deployment-test:latest
 docker system prune -f
-#docker run -d --name=${DOCKER_NAME} nxn-2019/deployment-test:latest
-docker run --name ${DOCKER_NAME} -p 2331:80 ${1} -d ${DOCKER_NAME} nxn-2019/deployment-test:latest
 
+docker run --name ${DOCKER_NAME} -p 2331:80 ${1} nxn2021/deployment-test:latest
+#docker run --name ${DOCKER_NAME} -p 2331:80 ${1} -d ${DOCKER_NAME} nxn2021/deployment-test:latest
+#docker run --name district-deployment-test -p 2331:80 ${1} -d district-deployment-test nxn2021/deployment-test:latest
 docker container ls -a
